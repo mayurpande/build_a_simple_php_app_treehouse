@@ -13,7 +13,7 @@ include ('inc/header.php');
 	   
            <p>I&rsquo;d love to hear from you! Complete the form to send me an email.</p>
 	
-	   <form method="post">
+	   <form method="post" action="contact-process.php">
 		
 		<table>
 			<tr>
