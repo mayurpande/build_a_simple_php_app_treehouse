@@ -14,9 +14,9 @@
 			<h1 class="branding-title"><a href="./">Shirts 4 Mike</a></h1>
 
 			<ul class="nav">
-				<li class="shirts"><a href="/build_a_simple_php_app_treehouse/shirts.php">Shirts</a></li>
-				<li class="contact"><a href="/build_a_simple_php_app_treehouse/contact.php">Contact</a></li>
-				<li class="cart"><a href="#">Shopping Cart</a></li>
+				<li class="shirts <?php if ($section == "shirts") { echo "on";} ?>"><a href="/build_a_simple_php_app_treehouse/shirts.php">Shirts</a></li>
+				<li class="contact <?php if ($section == "contact") {echo "on";} ?>"><a href="/build_a_simple_php_app_treehouse/contact.php">Contact</a></li>
+				<li class="cart"<a href="#">Shopping Cart</a></li>
 			</ul>
 
 		</div>
