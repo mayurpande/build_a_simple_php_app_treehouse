@@ -1,7 +1,7 @@
 <?php include('inc/header.php'); ?>
 
 
-	<div class="selection page">
+	<div class="section page">
 		<h1>Mike&rsquo;s Full Catalog Of Shirts</h1>
 	
 	</div>
