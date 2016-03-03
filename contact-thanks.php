@@ -7,7 +7,7 @@ include("inc/header.php");
 		
 		<div class="wrapper">
 			
-			<h1>Contact></h1>
+			<h1>Contact</h1>
 			
 			<p>Thanks for the email I&rsquo;ll be in touch shortly.</p>
 

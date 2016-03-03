@@ -12,6 +12,6 @@ $email_body = $email_body . "Message: " . $message . "\n";
 
 //TODO: Send Email
 
-header("Location: contact.thanks.php");
+header("Location: contact-thanks.php");
 
 ?>
