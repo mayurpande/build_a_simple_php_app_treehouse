@@ -1,0 +1,1 @@
+This is a php project from treehouse that lists t-shirt items for sale. I am also learning to use git and git hub at the same time. I first made a mistake not using a seperate branch to develop features on from master but have now incorporated that in. If there is anything anyone can do to help me progress please let me know!
