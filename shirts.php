@@ -1,10 +1,11 @@
 <?php
 
-$products = array(
-	"Logo Shirt, Red", 
-	"Mike the Frog Shirt, Black", 
-	"Mike the Frog Shirt, Blue"
-);
+$products = array(); 
+$products[101] = "Logo Shirt, Red";
+$products[102] =	"Mike the Frog Shirt, Black"; 
+$products[103] =	"Mike the Frog Shirt, Blue";
+$products[104] = "Logo Shirt, Green";
+
 
 ?>
 
