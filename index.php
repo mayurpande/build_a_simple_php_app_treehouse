@@ -9,7 +9,7 @@ include('inc/header.php'); ?>
 
 				<img class="hero" src="img/mike-the-frog.png" alt="Mike the Frog says:">
 				<div class="button">
-					<a href="shitrs.php">
+					<a href="shirts.php">
 						<h2>Hey, I&rsquo;m Mike!</h2>
 						<p>Check Out My Shirts</p>
 					</a>
@@ -27,9 +27,17 @@ include('inc/header.php'); ?>
 				<?php include("inc/products.php"); ?>
 
 				<ul class="products">
-					<?php	foreach($products as $product_id => $product) {
-									echo get_list_view_html($product_id,$product);			
+					<?php	
+								$total_products = count($products);
+								$position = 0;
+								$list_view_html = "";
+								foreach($products as $product_id => $product) {
+									$position++;
+									if($total_products - $position < 4){
+										$list_view_html =  get_list_view_html($product_id,$product) . $list_view_html;	
+									}		
 								} 
+								echo $list_view_html;
 					?>						
 				</ul>
 				
