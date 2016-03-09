@@ -55,7 +55,8 @@ include("inc/header.php");
 								<td>
 									<select name="os0" id="os0">
 										<?php foreach($product["sizes"] as $size) { ?>
-										<option value="<?php echo $size; ?>"><?php echo $size; ?> </option>
+											<option value="<?php echo $size; ?>"><?php echo $size; ?> </option>
+											<option value="<?php echo $style; ?>"><?php echo $style; ?></option>
 										<?php } ?>
 									</select>
 								</td>
