@@ -1,5 +1,5 @@
 <?php 
-
+include('inc/products.php');
 $pageTitle = "Mike's Full Catalog of Shirts";
 $section = "shirts";
 include('inc/header.php'); 
