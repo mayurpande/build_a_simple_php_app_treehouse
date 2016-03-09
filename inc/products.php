@@ -6,7 +6,7 @@ $products[101] = array(
 		"price" => 18,
 		"paypal" => "9P7DLECFD4LKE",
 	 	"sizes" => array("Small", "Medium", "Large", "X-large"),
-		"style" => array("Short Sleeve", "Long Sleeve", "Thermal", "Hooded");
+		"style" => array("Short Sleeve", "Long Sleeve", "Thermal", "Hooded")
 );
 $products[102] = array(
 		"name" => "Mike the Frog Shirt, Black",
@@ -14,7 +14,7 @@ $products[102] = array(
     "price" => 20,
     "paypal" => "SXKPTHN2EES3J",
 		"sizes" => array("Small", "Medium", "Large", "X-large"),
-		"style" => array("Short Sleeve", "Long Sleeve", "Thermal", "Hooded");
+		"style" => array("Short Sleeve", "Long Sleeve", "Thermal", "Hooded")
 );
 $products[103] = array(
     "name" => "Mike the Frog Shirt, Blue",
@@ -22,7 +22,7 @@ $products[103] = array(
     "price" => 20,
     "paypal" => "7T8LK5WXT5Q9J",
 		"sizes" => array("Small", "Medium", "Large", "X-large"),
-		"style" => array("Short Sleeve", "Long Sleeve", "Thermal", "Hooded");
+		"style" => array("Short Sleeve", "Long Sleeve", "Thermal", "Hooded")
 );
 $products[104] = array(
     "name" => "Logo Shirt, Green",
@@ -30,7 +30,7 @@ $products[104] = array(
     "price" => 18,
     "paypal" => "YKVL5F87E8PCS",
 		"sizes" => array("Small", "Medium", "Large", "X-large"),
-		"style" => array("Short Sleeve", "Long Sleeve", "Thermal", "Hooded");
+		"style" => array("Short Sleeve", "Long Sleeve", "Thermal", "Hooded")
 );
 $products[105] = array(
     "name" => "Mike the Frog Shirt, Yellow",
@@ -38,7 +38,7 @@ $products[105] = array(
     "price" => 25,
     "paypal" => "4CLP2SCVYM288",
 		"sizes" => array("Small", "Medium", "Large", "X-large"),
-		"style" => array("Short Sleeve", "Long Sleeve", "Thermal", "Hooded");
+		"style" => array("Short Sleeve", "Long Sleeve", "Thermal", "Hooded")
 );
 $products[106] = array(
     "name" => "Logo Shirt, Gray",
@@ -46,7 +46,7 @@ $products[106] = array(
     "price" => 20,
     "paypal" => "TNAZ2RGYYJ396",
 		"sizes" => array("Small", "Medium", "Large", "X-large"),
-		"style" => array("Short Sleeve", "Long Sleeve", "Thermal", "Hooded");
+		"style" => array("Short Sleeve", "Long Sleeve", "Thermal", "Hooded")
 );
 $products[107] = array(
     "name" => "Logo Shirt, Teal",
@@ -54,7 +54,7 @@ $products[107] = array(
     "price" => 20,
     "paypal" => "S5FMPJN6Y2C32",
 		"sizes" => array("Small", "Medium", "Large", "X-large"),
-		"style" => array("Short Sleeve", "Long Sleeve", "Thermal", "Hooded");
+		"style" => array("Short Sleeve", "Long Sleeve", "Thermal", "Hooded")
 );
 $products[108] = array(
     "name" => "Mike the Frog Shirt, Orange",
@@ -62,7 +62,7 @@ $products[108] = array(
     "price" => 25,
     "paypal" => "JMFK7P7VEHS44",
 		"sizes" => array("Large", "X-large"),
-		"style" => array("Short Sleeve", "Long Sleeve", "Thermal", "Hooded");
+		"style" => array("Short Sleeve", "Long Sleeve", "Thermal", "Hooded")
 );
 
 ?>
