@@ -56,8 +56,21 @@ include("inc/header.php");
 									<select name="os0" id="os0">
 										<?php foreach($product["sizes"] as $size) { ?>
 											<option value="<?php echo $size; ?>"><?php echo $size; ?> </option>
-											<option value="<?php echo $style; ?>"><?php echo $style; ?></option>
-										<?php } ?>
+											<?php } ?>
+									</select>
+								</td>
+							</tr>
+
+							<tr>
+								<th>
+									<input type="hidden" name="on0" value="Style">
+									<label for="os0">Style</label>
+								</th>
+								<td>
+									<select name="os0" id="os0">
+										<?php foreach($product["style"] as $style) { ?>
+											<option value="<?php echo $style; ?>"><?php echo $style; ?> </option>
+											<?php } ?>
 									</select>
 								</td>
 							</tr>
