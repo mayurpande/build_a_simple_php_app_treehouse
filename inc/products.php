@@ -7,7 +7,7 @@ function get_list_view_html($product_id, $product){
 		$output = $output . "<li>";
 		$output = $output . '<a href="shirts.php?id=' . $product_id . '">';
 		$output = $output . '<img src="' . $product["img"] . '" alt="' . $product["name"] . '">';
-		$output = $output . "<p>View Details</p>"
+		$output = $output . "<p>View Details</p>";
 		$output = $output . "</a>";
 		$output = $output . "</li>";
 
