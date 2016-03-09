@@ -9,7 +9,11 @@ function get_list_view_html($product_id, $product){
 		$output = $output . '<img src="' . $product["img"] . '" alt="' . $product["name"] . '">';
 		$output = $output . "<p>View Details</p>";
 		$output = $output . "</a>";
-		$output = $output . "</li>";
+		$output = $output . "</li>";		
+
+
+
+		
 
 		return $output;
 	
