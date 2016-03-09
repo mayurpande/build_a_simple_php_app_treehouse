@@ -63,18 +63,30 @@ include("inc/header.php");
 
 							<tr>
 								<th>
-									<input type="hidden" name="on0" value="Style">
+									<input type="hidden" name="on1" value="Style">
 									<label for="os0">Style</label>
 								</th>
 								<td>
-									<select name="os0" id="os0">
+									<select name="os1" id="os1">
 										<?php foreach($product["style"] as $style) { ?>
 											<option value="<?php echo $style; ?>"><?php echo $style; ?> </option>
 											<?php } ?>
 									</select>
 								</td>
 							</tr>
+
+							<tr>
+								<th>
+									<input type="hidden" name="on2" value="Message">
+									<label for="os2">Message</label>
+								</th>
+								<td>
+									<textarea id="message" name="os2"></textarea>
+								</td>
+			
+							</tr>
 							</table>
+							
 							<input type="submit" value="Add to Cart" name="submit">
 						</form>
 						
