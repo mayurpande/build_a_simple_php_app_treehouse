@@ -1,9 +1,16 @@
 <?php
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" ){
-	$name = $_POST["name"];
-	$email = $_POST['email'];
-	$message = $_POST["message"];
+	$name = trim($_POST["name"]);
+	$email = trim($_POST['email']);
+	$message = trim($_POST["message"]);
+
+//conditional to check if attributes have values
+
+  if ($name == "" || $email == "" || $message == ""){
+    echo "You must specify a value for name and email address and message";
+    exit;
+	}
 
 	$email_body = "";
 	$email_body = $email_body .  "Name: " . $name . "\n";
