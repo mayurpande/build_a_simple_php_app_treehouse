@@ -1,4 +1,5 @@
 <?php
+require_once('vendor/phpmailer/phpmailer/class.phpmailer.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" ){
 	$name = trim($_POST["name"]);
@@ -23,6 +24,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" ){
   	echo "Your form submission has an error";
   	exit;
   }
+  
+  
+  
+  $mail = new PHPMailer();
+  
+  //checks if email address is not valid
+  if(!$mail->validateAddress($email)){
+  	echo "You must specify a valid email address";
+  	exit;
+  }
+  
+  
 
 	$email_body = "";
 	$email_body = $email_body .  "Name: " . $name . "\n";
