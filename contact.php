@@ -93,7 +93,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" ){
 	We can use static values instead of variables here because these values won't change from form submission to form submission
 	
 	*/
-	$address = "orders@shirts4mike.com";
+	$address = "mayurpandeuk@gmail.com";
 	$mail->AddAddress($address,"Shirts 4 Mike");
 	
 	/*
