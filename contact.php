@@ -10,23 +10,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" ){
 //standard validation that make sure the attirbutes field have a value
 
   if ($name == "" || $email == "" || $message == ""){
-    echo "You must specify a value for name and email address and message";
-    exit;
-	}
+    $error_message = "You must specify a value for name and email address and message";
+  }
 
 //security validation to make to make sure that a spammer bot is not hijacking our form to send spam to other people
-  foreach($_POST as $value){
-  	if(stripos($value,'Content-Type:') !== FALSE){
-  	    echo "There was a problem with the information you entered.";
-  		exit;
-  	}
-  }
+ if(!isset($error_message)){
+	 foreach($_POST as $value){
+		if(stripos($value,'Content-Type:') !== FALSE){
+		    $error_message =  "There was a problem with the information you entered.";
+		}
+	  }
+ }
   
   //security validation uses spam honeypot technique to make sure that the address field is blank
   
-  if($_POST["address"] != ""){
-  	echo "Your form submission has an error";
-  	exit;
+  if(!isset($error_message) && $_POST["address"] != ""){
+  	$error_message =  "Your form submission has an error";
   }
   
   //create a php mailer object. Next time will use PHPMailerAutoload object
@@ -34,11 +33,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" ){
   $mail = new PHPMailer();
   
   //checks if email address is not valid
-  if(!$mail->validateAddress($email)){
-  	echo "You must specify a valid email address";
-  	exit;
+  if(!isset($error_message) && !$mail->validateAddress($email)){
+  	$error_message = "You must specify a valid email address";
   }
   
+  
+  //check if variable error message is set
+  
+  if(!isset($error_message)){
+	
   
     //here we have stored the email body into a variable
     /*
@@ -143,17 +146,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" ){
 	*/
 	
 	//checks if mail sent
-	if(!$mail->Send()){
+	if($mail->Send()){
+		header("Location: contact.php?status=thanks");
+                exit;
+	}else{
+
 	//if not true (sent mail) print this
-		echo "There was a problem sending the email " . $mail->ErrorInfo;
+		$error_message =  "There was a problem sending the email " . $mail->ErrorInfo;
 	//if not sent we want to exit page from processing
-		exit;
 	}
 	
 
-	header("Location: contact.php?status=thanks");
-	exit;
+	
+    }
 }
+
 ?>
 <?php 
 $pageTitle = "Contact Mike";
@@ -172,9 +179,16 @@ include ('inc/header.php');
           	<p>Thanks for the email! I&rsquo;ll be in touch shortly.</p>
 	  <?php } else { ?>
  
-		   <p>I&rsquo;d love to hear from you! Complete the form to send me an email.</p>
 	
-		   <form method="post" action="contact.php">
+		 <?php 
+			if(!isset($error_message)){
+			     echo '<p>I&rsquo;d love to hear from you! Complete the form to send me an email.</p>';
+			}else{
+			     echo '<p class="message">' . $error_message . '</p>';
+			} 
+		?>
+
+		  <form method="post" action="contact.php">
 		
 			<table>
 				<tr>
@@ -182,7 +196,7 @@ include ('inc/header.php');
 				    <label for="name">Name: </label>
 				  </th>
 				  <td>
-				    <input type="text" name="name" id="name">
+				    <input type="text" name="name" id="name" value="<?php if(isset($name)) {echo htmlspecialchars($name);} ?>">
 				  </td>
 				</tr>
 				<tr>
@@ -190,7 +204,7 @@ include ('inc/header.php');
 				    <label for="email">Email: </label>
 				  </th>
 				  <td>
-				    <input type="text" name="email" id="email">
+				    <input type="text" name="email" id="email" value= "<?php if(isset($email)) {echo htmlspecialchars($email);} ?>">
 				  </td>
 				</tr>
 				<tr>
@@ -198,7 +212,7 @@ include ('inc/header.php');
 				    <label for="message">Message: </label>
 				  </th>
 				  <td>
-				    <textarea name="message" id="message" placeholder="Please type your message here..."></textarea>
+				    <textarea name="message" id="message" placeholder="Please type your message here..."><?php if(isset($message)) {echo htmlspecialchars($message);} ?></textarea>
 				  </td>
 				</tr>
 		        <tr style="display: none;">
