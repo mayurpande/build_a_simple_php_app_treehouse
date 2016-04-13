@@ -1,8 +1,9 @@
-<?php 
+<?php
+
 $pageTitle = "Thank you for your order!";
 $section = "none";
 
-include("inc/header.php"); 
+include($_SERVER['DOCUMENT_ROOT'] . "/inc/header.php"); 
 
 ?>
 
@@ -15,7 +16,7 @@ include("inc/header.php");
 			
 			<p>Thank you for your payment. Your transaction has been completed, and a receipt for your purchase has been emailed to you. You may log into your account at <a href="http://www.paypal.com/us">www.paypal.com/us</a> to view details of this transaction.</p>
 			
-			<p>Need another shirt already? Visit the <a href="shirts.php">Shirts Listing</a> page again.</a></p>
+			<p>Need another shirt already? Visit the <a href="../shirts.php">Shirts Listing</a> page again.</a></p>
 		
 		
 		</div>
@@ -23,4 +24,4 @@ include("inc/header.php");
 	</div>
 
 
-<?php include("inc/footer.php"); ?>
+<?php include($_SERVER['DOCUMENT_ROOT'] . "/inc/footer.php"); ?>

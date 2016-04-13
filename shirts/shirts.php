@@ -1,8 +1,8 @@
 <?php 
-include('inc/products.php');
+include('../inc/products.php');
 $pageTitle = "Mike's Full Catalog of Shirts";
 $section = "shirts";
-include('inc/header.php'); 
+include('../inc/header.php'); 
 
 ?>
 
@@ -27,6 +27,6 @@ include('inc/header.php');
 	</div>
 
 
-<?php include('inc/footer.php'); ?>
+<?php include('../inc/footer.php'); ?>
 
 

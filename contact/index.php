@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" ){
   }
   
   //create a php mailer object. Next time will use PHPMailerAutoload object
-  require_once('vendor/phpmailer/phpmailer/class.phpmailer.php');
+  require_once('../vendor/phpmailer/phpmailer/class.phpmailer.php');
   $mail = new PHPMailer();
   
   //checks if email address is not valid
@@ -147,7 +147,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" ){
 	
 	//checks if mail sent
 	if($mail->Send()){
-		header("Location: contact.php?status=thanks");
+		header("Location: /contact/thanks/");
                 exit;
 	}else{
 
@@ -165,7 +165,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" ){
 <?php 
 $pageTitle = "Contact Mike";
 $section = "contact";
-include ('inc/header.php'); 
+include ('../inc/header.php'); 
 ?>
 
 
@@ -188,7 +188,7 @@ include ('inc/header.php');
 			} 
 		?>
 
-		  <form method="post" action="contact.php">
+		  <form method="post" action="/contact/">
 		
 			<table>
 				<tr>
@@ -233,5 +233,5 @@ include ('inc/header.php');
 
 	</div>
 
-<?php include ('inc/footer.php'); ?>
+<?php include ('../inc/footer.php'); ?>
 

@@ -1,6 +1,6 @@
 <?php 
 #shirt details page has access to the main products array from the include file
-include("inc/products.php"); 
+include("../inc/products.php"); 
 
 #shirt details page also has the product id for a particular shirt from the get variable
 if (isset($_GET["id"])){
@@ -11,13 +11,13 @@ if (isset($_GET["id"])){
 }
 
 if(!isset($product)){
-	header("Location: shirts.php");
+	header("Location: /shirts/");
 	exit();
 }
 
 $section = "shirts";
 $pageTitle = $product["name"];
-include("inc/header.php"); 
+include("../inc/header.php"); 
 
 
 ?>
@@ -28,12 +28,12 @@ include("inc/header.php");
 					
 					
 					<div class="breadcrumb">
-						<a href="shirts.php">Shirts</a> &gt; <?php echo $product["name"]; ?>
+						<a href="/shirts/">Shirts</a> &gt; <?php echo $product["name"]; ?>
 					</div>
 					
 					<div class="shirt-picture">
 						<span>
-							<img src="<?php echo $product['img']; ?>" alt="<?php echo $product['name']; ?>">
+							<img src="/<?php echo $product['img']; ?>" alt="<?php echo $product['name']; ?>">
 						</span>
 					</div>
 					
@@ -98,4 +98,4 @@ include("inc/header.php");
 	</div>
 	
 	
-<?php include("inc/footer.php")?>
+<?php include("../inc/footer.php")?>
