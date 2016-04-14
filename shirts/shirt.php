@@ -1,7 +1,7 @@
 <?php 
 #shirt details page has access to the main products array from the include file
 include("../inc/products.php"); 
-
+$products = get_products_all();
 #shirt details page also has the product id for a particular shirt from the get variable
 if (isset($_GET["id"])){
 	$product_id = $_GET["id"];
@@ -59,31 +59,6 @@ include("../inc/header.php");
 											<?php } ?>
 									</select>
 								</td>
-							</tr>
-
-							<tr>
-								<th>
-									<input type="hidden" name="on1" value="Style">
-									<label for="os0">Style</label>
-								</th>
-								<td>
-									<select name="os1" id="os1">
-										<?php foreach($product["style"] as $style) { ?>
-											<option value="<?php echo $style; ?>"><?php echo $style; ?> </option>
-											<?php } ?>
-									</select>
-								</td>
-							</tr>
-
-							<tr>
-								<th>
-									<input type="hidden" name="on2" value="Message">
-									<label for="os2">Message</label>
-								</th>
-								<td>
-									<textarea id="message" name="os2"></textarea>
-								</td>
-			
 							</tr>
 							</table>
 							

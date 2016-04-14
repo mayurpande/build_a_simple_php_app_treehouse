@@ -3,6 +3,8 @@ include('../inc/products.php');
 $pageTitle = "Mike's Full Catalog of Shirts";
 $section = "shirts";
 include('../inc/header.php'); 
+//call new products function, and load return variable with the same name as before
+$products = get_products_all();
 
 ?>
 
