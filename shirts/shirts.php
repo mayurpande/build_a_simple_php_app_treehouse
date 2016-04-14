@@ -3,6 +3,8 @@ include('../inc/products.php');
 $pageTitle = "Mike's Full Catalog of Shirts";
 $section = "shirts";
 include('../inc/header.php'); 
+//call new products function, and load return variable with the same name as before
+$products = get_products_all();
 
 ?>
 
@@ -15,8 +17,8 @@ include('../inc/header.php');
 				
 			<ul class="products">
 				
-				<?php foreach ($products as $product_id => $product){ 
-						echo get_list_view_html($product_id,$product);
+				<?php foreach ($products as $product){ 
+						echo get_list_view_html($product);
 					}
 				?>
 				
