@@ -2,19 +2,13 @@
 #shirt details page has access to the main products array from the include file
 include("../inc/products.php"); 
 $products = get_products_all();
-#shirt details page also has the product id for a particular shirt from the get variable
-if (isset($_GET["id"])){
-	$product_id = $_GET["id"];
-	if(isset($products[$product_id])){
-		$product = $products[$product_id];
-	}
-}
-
+$id = $_GET["id"];
+$product = get_product($id);
 if(!isset($product)){
-	header("Location: /shirts/");
+	header("Location: shirts.php");
 	exit();
 }
-
+#shirt details page also has the product id for a particular shirt from the get variable
 $section = "shirts";
 $pageTitle = $product["name"];
 include("../inc/header.php"); 

@@ -18,6 +18,19 @@ function get_list_view_html($product){
 		return $output;
 	
 }
+
+function get_product($id){
+	$products = get_products_all();
+	if(isset($id)){
+		if(isset($products[$id])){
+			return $product = $products[$id];
+		}else{
+			return array();
+		}
+	}	
+	
+}
+
 //function will return an array of recent products
 //it will not return any html or instructions about displaying the page
 function get_products_recent(){
