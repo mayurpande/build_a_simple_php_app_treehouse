@@ -1,11 +1,11 @@
 <?php
 
-function get_list_view_html($product_id, $product){
+function get_list_view_html($product){
 		
 		$output = "";			
 				
 		$output = $output . "<li>";
-		$output = $output . '<a href="/shirts/' . $product_id . '/">';
+		$output = $output . '<a href="/shirts/' . $product["sku"] . '/">';
 		$output = $output . '<img src="/' . $product["img"] . '" alt="' . $product["name"] . '">';
 		$output = $output . "<p>View Details</p>";
 		$output = $output . "</a>";
@@ -83,5 +83,9 @@ $products[108] = array(
 		"sizes" => array("Large", "X-large"),
 		"style" => array("Short Sleeve", "Long Sleeve", "Thermal", "Hooded")
 );
+
+foreach ($products as $product_id => $products){
+	$products[$product_id]["sku"] = $product_id;
+}
 
 ?>
