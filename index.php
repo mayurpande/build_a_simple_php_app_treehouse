@@ -24,20 +24,18 @@ include('inc/header.php'); ?>
 
 				<h2>Mike&rsquo;s Latest Shirts</h2>
 				
-				<?php include("inc/products.php"); ?>
+				<?php 
+					include('inc/products.php'); 
+					$recent = get_products_recent();
+				?>
 
 				<ul class="products">
 					<?php	
-								$total_products = count($products);
-								$position = 0;
-								$list_view_html = "";
-								foreach($products as $product) {
-									$position++;
-									if($total_products - $position < 4){
-										$list_view_html =  get_list_view_html($product) . $list_view_html;	
-									}		
-								} 
-								echo $list_view_html;
+						$list_view_html = "";
+						foreach($recent as $product){
+							$list_view_html =  get_list_view_html($product) . $list_view_html;			
+						} 
+						echo $list_view_html;
 					?>						
 				</ul>
 				
