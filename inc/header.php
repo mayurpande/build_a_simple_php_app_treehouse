@@ -17,7 +17,15 @@
 			<ul class="nav">
 				<li class="shirts <?php if ($section == "shirts") { echo "on";} ?>"><a href="/shirts/">Shirts</a></li>
 				<li class="contact <?php if ($section == "contact") {echo "on";} ?>"><a href="/contact/">Contact</a></li>
-				<li class="cart"><a target="paypal" href="https://www.paypal.com/cgi-bin/webscr?cmd=_cart&amp;business=Q6NFNPFRBWR8S&amp;display=1">Shopping Cart</a></li>
+				<li class="search <?php if ($section == "search") {echo "on";} ?>"><a href="/search/">Search</a></li>
+                <li class="cart"><a target="paypal" href="https://www.paypal.com/cgi-bin/webscr?cmd=_cart&amp;business=Q6NFNPFRBWR8S&amp;display=1">Shopping Cart</a></li>
+                <li class="search_bar">
+                     <form method="get" action="/search/">
+                         <input type="text" name="s" value="<?php echo htmlspecialchars($search_term); ?>" />
+                        <input type="submit" value="Go" />
+                     </form>
+                 </li>
+                
 			</ul>
 
 		</div>
