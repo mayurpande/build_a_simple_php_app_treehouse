@@ -62,7 +62,7 @@ function get_products_search($s){
 
     foreach($all as $product){
         //TODO if (there a match){
-             $results[] = $product;
+            $results[] = $product;
         // }
     }
     return $results;
