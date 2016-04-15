@@ -61,9 +61,9 @@ function get_products_search($s){
     $all = get_products_all();
 
     foreach($all as $product){
-        //TODO if (there a match){
+        if ((stripos($product["name"],$s) !== false) || (stripos($product["sku"],$s) !== false)){
             $results[] = $product;
-        // }
+        }
     }
     return $results;
 
