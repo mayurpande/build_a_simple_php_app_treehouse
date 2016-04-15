@@ -19,6 +19,8 @@ function get_list_view_html($product){
 	
 }
 
+
+
 function get_product($id){
 	$products = get_products_all();
 	if(isset($id)){
@@ -51,6 +53,20 @@ function get_products_recent(){
 		}
 	}
 	return $recent;
+}
+
+//search function
+function get_products_search($s){
+    $results = array();
+    $all = get_products_all();
+
+    foreach($all as $product){
+        //TODO if (there a match){
+             $results[] = $product;
+        // }
+    }
+    return $results;
+
 }
 //function to return full list of all products
 function get_products_all(){
