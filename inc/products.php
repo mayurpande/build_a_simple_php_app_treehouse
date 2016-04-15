@@ -68,6 +68,11 @@ function get_products_search($s){
     return $results;
 
 }
+
+//function to calculate total number of products
+function get_products_count(){
+    return $count = count(get_products_all());
+}
 //function to return full list of all products
 function get_products_all(){
 	$products = array();
