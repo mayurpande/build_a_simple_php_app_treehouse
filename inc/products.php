@@ -87,7 +87,7 @@ function get_products_subset($positionStart, $positionEnd){
         if($position >= $positionStart && $position <= $positionEnd){
             //if the shirt is one of the ones we want to include, we will include it in the subset array
             $subset[] = $product;
-        //}
+        }
     }   
     return $subset;
 }
