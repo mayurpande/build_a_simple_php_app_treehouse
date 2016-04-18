@@ -69,6 +69,29 @@ function get_products_search($s){
 
 }
 
+//function to obtain shirts for selected pages
+function get_products_subset($positionStart, $positionEnd){
+    $subset = array();
+    $all = get_products_all();
+    
+    $position = 0;
+
+    //foreach loop to go through all products one after the other
+    foreach($all as $product){
+        //this will increase the shirt number by one each time the loop is run
+        $position += 1;
+        //we need a conditional that checks if the shirt is one of the ones
+        //in the subset of shirts we are looking for
+        //we check if the current position is greater than or equal to the starting position
+        //it must also pass other condition is must be less than or equal to the ending position
+        if($position >= $positionStart && $position <= $positionEnd){
+            //if the shirt is one of the ones we want to include, we will include it in the subset array
+            $subset[] = $product;
+        //}
+    }   
+    return $subset;
+}
+
 //function to calculate total number of products
 function get_products_count(){
     return $count = count(get_products_all());
