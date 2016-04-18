@@ -1,11 +1,21 @@
 <?php 
 #shirt details page has access to the main products array from the include file
 include("../inc/products.php"); 
-$products = get_products_all();
-$id = $_GET["id"];
-$product = get_product($id);
-if(!isset($product)){
-	header("Location: shirts.php");
+
+
+//if an ID is specifified in the query string, use it
+if(isset($_GET["id"])) {
+    $product_id = intval($_GET["id"]);
+    $product = get_product_single($product_id);
+}
+
+
+//  a $product will only be set and not false if an ID is specifified in the query 
+//  string and it corresponds to a real products. If not product is set
+//  then redirect to the shirts listing pag; otherwise; continue
+//  on and display the Shirt Details page for that $products
+if(empty($product)){
+	header("Location: /shirts/");
 	exit();
 }
 #shirt details page also has the product id for a particular shirt from the get variable
