@@ -45,26 +45,20 @@ include('../inc/header.php');
 			
 			<h1>Mike&rsquo;s Full Catalog of Shirts</h1>
 
-            
-            <div class="pagination">
+            		<?php include('../inc/list-navigation.php'); ?>
                 
-                <?php $i=0; ?>
-                <?php while($i < $total_pages): ?>
-                <?php $i += 1; ?>
-                <?php echo $i; ?>
-                <?php endwhile ?>
-    
-            </div>    
-			<ul class="products">
+	    		<ul class="products">
 				
 				<?php foreach ($products as $product){ 
 						echo get_list_view_html($product);
 					}
 				?>
 				
-			</ul>
-				
-		</div>
+	               </ul>
+
+			 <?php include('../inc/list-navigation.php'); ?>	
+
+        	</div>
 		
 	</div>
 
