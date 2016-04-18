@@ -34,8 +34,9 @@ include('../inc/header.php');
             </form>
 
             <?php
+
+                include('../inc/list_view.html.php');
                 //if search term isnt blank then a search is being performed
-                
                 if($search_term != ""){
                     //check to see if search query returns nothing (blank array)
                     //if the array is not empty as in result are found then display the results

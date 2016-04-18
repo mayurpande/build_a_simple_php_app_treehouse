@@ -27,16 +27,6 @@ if($end > $total_products) {
 
 
 
-echo "<pre>";
-echo "Total Products: ";
-echo $total_products;
-echo "\nTotal Pages: ";
-echo $total_pages;
-echo "\nCurrent Page: ";
-echo $current_page;
-echo " (" . $start . "-" . $end . ")";
-exit;
-
 //call new products function, and load return variable with the same name as before
 $products = get_products_subset($start,$end);
 
@@ -54,17 +44,23 @@ include('../inc/header.php');
 		<div class="wrapper">
 			
 			<h1>Mike&rsquo;s Full Catalog of Shirts</h1>
+
+            		<?php include('../inc/list-navigation.php'); ?>
+                
+	    		<ul class="products">
 				
-			<ul class="products">
-				
-				<?php foreach ($products as $product){ 
+                <?php
+                    include('../inc/list_view.html.php');
+                    foreach ($products as $product){ 
 						echo get_list_view_html($product);
 					}
 				?>
 				
-			</ul>
-				
-		</div>
+	               </ul>
+
+			 <?php include('../inc/list-navigation.php'); ?>	
+
+        	</div>
 		
 	</div>
 
