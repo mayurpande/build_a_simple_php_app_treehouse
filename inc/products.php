@@ -330,4 +330,32 @@ function get_products_all(){
     return $products;
 }
 
+// Returns an array of product information for the product that matches the sku;
+// returns a boolean false if no product matches the sku
+// @param   int     $sku    the sku
+// @return  mixed   array   list of product information for the one matching product
+//                  bool    false if no product matches
+function get_product_single($sku){
+    require('db.php');
+
+    try{
+        //this line create a PDO statment object with the sql query we want to run
+        //it contains a question mark instead of a sku
+        $results =  $db->prepare("SELECT * FROM products WHERE sku = ?");
+        //this line hear binds our sku variable to that first question mark
+        $results->bindParam(1,$sku);  
+        //this line here executes the query which loads the result set into our results object
+        $results->execute();  
+    }catch(Exception $e){
+        echo "Data could not be retrieved";
+        exit;
+    }
+    //this line then calls the fetch method to retrieve the product information for the one 
+    //product that matches the sku and loads it into the product variable so it can be returned back
+    //to the controller
+    $product = $results->fetch(PDO::FETCH_ASSOC);
+  
+    return $product;
+}
+
 ?>
