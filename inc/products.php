@@ -1,9 +1,5 @@
 <?php
 
-
-
-
-
 function get_product($id){
 	$products = get_products_all();
 	if(isset($id)){
@@ -81,7 +77,8 @@ function get_products_count(){
 }
 //function to return full list of all products
 function get_products_all(){
-	$products = array();
+    /*
+    $products = array();
 	$products[101] = array(
 			"name" => "Logo Shirt, Red",
 			"img" => "img/shirts/shirt-101.jpg",
@@ -315,12 +312,22 @@ function get_products_all(){
             "paypal" => "Y6EQRE445MYYW",
             "sizes" => array("Small","Medium","Large","X-Large")
     );
-
+    
 	foreach ($products as $product_id => $product){
 		$products[$product_id]["sku"] = $product_id;
-	}
+    }*/
 
-	return $products;
+    
+   require('db.php');
+
+    try{
+        $results = $db->query("SELECT * FROM products ORDER BY sku ASC");
+    }catch(Exception $e){
+        echo "Data could not be retreived";
+    }
+    $products = ($results->fetchAll(PDO::FETCH_ASSOC));
+
+    return $products;
 }
 
 ?>
