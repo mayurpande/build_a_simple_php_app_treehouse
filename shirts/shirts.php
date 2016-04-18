@@ -49,7 +49,9 @@ include('../inc/header.php');
                 
 	    		<ul class="products">
 				
-				<?php foreach ($products as $product){ 
+                <?php
+                    include('../inc/list_view.html.php');
+                    foreach ($products as $product){ 
 						echo get_list_view_html($product);
 					}
 				?>
