@@ -27,16 +27,6 @@ if($end > $total_products) {
 
 
 
-echo "<pre>";
-echo "Total Products: ";
-echo $total_products;
-echo "\nTotal Pages: ";
-echo $total_pages;
-echo "\nCurrent Page: ";
-echo $current_page;
-echo " (" . $start . "-" . $end . ")";
-exit;
-
 //call new products function, and load return variable with the same name as before
 $products = get_products_subset($start,$end);
 
@@ -54,7 +44,17 @@ include('../inc/header.php');
 		<div class="wrapper">
 			
 			<h1>Mike&rsquo;s Full Catalog of Shirts</h1>
-				
+
+            
+            <div class="pagination">
+                
+                <?php $i=0; ?>
+                <?php while($i < $total_pages): ?>
+                <?php $i += 1; ?>
+                <?php echo $i; ?>
+                <?php endwhile ?>
+    
+            </div>    
 			<ul class="products">
 				
 				<?php foreach ($products as $product){ 
