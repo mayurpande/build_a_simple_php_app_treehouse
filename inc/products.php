@@ -3,309 +3,110 @@
 //function will return an array of recent products
 //it will not return any html or instructions about displaying the page
 function get_products_recent(){
-	$recent = array();
-	//stores $products array into $all variable
-	$all = get_products_all();
-	$total_products = count($all);
-	$position = 0;
+    require('db.php');
+    try{
+        //no need for prepare method as there is no user input
+        $results = $db->query("
+            SELECT name,price,img,sku,paypal
+            FROM products
+            ORDER BY sku DESC
+            LIMIT 4
+            ");
+    }catch(Exception $e){
+        echo "Data could not be retrieved from the db";
+        exit;
+    }  
 
-	//loop through all the shirts one by one to determine if any of them is one of the last four shirts
-	foreach($all as $product){
-	//when we find one of the shirts that is one of the last four shirts we will add it to the recent array
-		//if $product is one of the 
-		//last four  shirts {
-		$position = $position + 1;
-		if($total_products - $position < 4){
-			$recent[] = $product;
-		}
-	}
+    //we called the query method above, so we should have all four shirts in the results object
+    //we can extract them into an array with the fetch all method
+    $recent = $results->fetchAll(PDO::FETCH_ASSOC);
+    $recent = array_reverse($recent);
 	return $recent;
 }
 
 //search function
 function get_products_search($s){
-    $results = array();
-    $all = get_products_all();
+    require('db.php');
 
-    foreach($all as $product){
-        if ((stripos($product["name"],$s) !== false) || (stripos($product["sku"],$s) !== false)){
-            $results[] = $product;
-        }
+    try{
+        $results = $db->prepare("
+            SELECT *
+            FROM products
+            WHERE name LIKE ?
+            ORDER BY sku");
+        //normally we use bind param for the placeholder as this is ok to use when binding a 
+        //variable for a placeholder. However as we need the wildcards (%%) we cannot use bind 
+        //param. We will need to use bindValue. You could pass a variable to bindValue without
+        //any problems. However there is a subtle little difference between how bindValue and 
+        //bindParam works;
+        //bindParam binds the placeholder to the specific variable, even if that variable changes
+        //later.
+        //bindValue on the other hand;
+        //binds the placeholder to the value in the variable at the moment of the binding and all 
+        //the examples we have used before this one either bindParam or bindValue would have worked
+        //just fine 
+        //with bindValue though we can use contactenation hence we can use the wildcards
+        $results->bindValue(1,"%" . $s . "%");
+        $results->execute();
+
+    }catch(Exception $e){
+        echo "Data could not be retrieved from db";
+        exit;
     }
-    return $results;
+
+    $matches = $results->fetchAll(PDO::FETCH_ASSOC);
+
+    return $matches;
 
 }
 
 //function to obtain shirts for selected pages
 function get_products_subset($positionStart, $positionEnd){
-    $subset = array();
-    $all = get_products_all();
-    
-    $position = 0;
+    //calculate offset and row position to use in query
+    $offset = $positionStart + 1;
+    $rows = $positionEnd - $positionStart + 1;
 
-    //foreach loop to go through all products one after the other
-    foreach($all as $product){
-        //this will increase the shirt number by one each time the loop is run
-        $position += 1;
-        //we need a conditional that checks if the shirt is one of the ones
-        //in the subset of shirts we are looking for
-        //we check if the current position is greater than or equal to the starting position
-        //it must also pass other condition is must be less than or equal to the ending position
-        if($position >= $positionStart && $position <= $positionEnd){
-            //if the shirt is one of the ones we want to include, we will include it in the subset array
-            $subset[] = $product;
-        }
-    }   
+    
+    require('db.php');
+    try{
+        $results = $db->prepare("
+            SELECT * 
+            FROM products
+            ORDER BY sku ASC
+            LIMIT ?,? 
+            ");
+        //bind limit parameters, as this will be a string update, use pdo method to convert to int
+        $results->bindParam(1,$offset,PDO::PARAM_INT);
+        $results->bindParam(2,$rows,PDO::PARAM_INT);
+        $results->execute();
+    }catch(Exception $e){
+        echo 'Data could not be found';
+        exit;
+    }
+
+    $subset = $results->fetchAll(PDO::FETCH_ASSOC);
+
     return $subset;
 }
 
 //function to calculate total number of products
 function get_products_count(){
-    return $count = count(get_products_all());
+    require('db.php');
+
+    try{
+        $results = $db->query("
+            SELECT COUNT(sku)
+            FROM products");
+    }catch(Exception $e){
+        echo 'Data could not be retrieved from the db';
+        exit;
+    }
+
+    return(intval($results->fetchColumn(0)));
 }
 //function to return full list of all products
 function get_products_all(){
-    /*
-    $products = array();
-	$products[101] = array(
-			"name" => "Logo Shirt, Red",
-			"img" => "img/shirts/shirt-101.jpg",
-			"price" => 18,
-			"paypal" => "9P7DLECFD4LKE",
-			"sizes" => array("Small", "Medium", "Large", "X-large"),
-			"style" => array("Short Sleeve", "Long Sleeve", "Thermal", "Hooded")
-	);
-	$products[102] = array(
-			"name" => "Mike the Frog Shirt, Black",
-	    "img" => "img/shirts/shirt-102.jpg",
-	    "price" => 20,
-	    "paypal" => "SXKPTHN2EES3J",
-			"sizes" => array("Small", "Medium", "Large", "X-large"),
-			"style" => array("Short Sleeve", "Long Sleeve", "Thermal", "Hooded")
-	);
-	$products[103] = array(
-	    "name" => "Mike the Frog Shirt, Blue",
-	    "img" => "img/shirts/shirt-103.jpg",    
-	    "price" => 20,
-	    "paypal" => "7T8LK5WXT5Q9J",
-			"sizes" => array("Small", "Medium", "Large", "X-large"),
-			"style" => array("Short Sleeve", "Long Sleeve", "Thermal", "Hooded")
-	);
-	$products[104] = array(
-	    "name" => "Logo Shirt, Green",
-	    "img" => "img/shirts/shirt-104.jpg",    
-	    "price" => 18,
-	    "paypal" => "YKVL5F87E8PCS",
-			"sizes" => array("Small", "Medium", "Large", "X-large"),
-			"style" => array("Short Sleeve", "Long Sleeve", "Thermal", "Hooded")
-	);
-	$products[105] = array(
-	    "name" => "Mike the Frog Shirt, Yellow",
-	    "img" => "img/shirts/shirt-105.jpg",    
-	    "price" => 25,
-	    "paypal" => "4CLP2SCVYM288",
-			"sizes" => array("Small", "Medium", "Large", "X-large"),
-			"style" => array("Short Sleeve", "Long Sleeve", "Thermal", "Hooded")
-	);
-	$products[106] = array(
-	    "name" => "Logo Shirt, Gray",
-	    "img" => "img/shirts/shirt-106.jpg",    
-	    "price" => 20,
-	    "paypal" => "TNAZ2RGYYJ396",
-			"sizes" => array("Small", "Medium", "Large", "X-large"),
-			"style" => array("Short Sleeve", "Long Sleeve", "Thermal", "Hooded")
-	);
-	$products[107] = array(
-	    "name" => "Logo Shirt, Teal",
-	    "img" => "img/shirts/shirt-107.jpg",    
-	    "price" => 20,
-	    "paypal" => "S5FMPJN6Y2C32",
-			"sizes" => array("Small", "Medium", "Large", "X-large"),
-			"style" => array("Short Sleeve", "Long Sleeve", "Thermal", "Hooded")
-	);
-	$products[108] = array(
-	    "name" => "Mike the Frog Shirt, Orange",
-	    "img" => "img/shirts/shirt-108.jpg",    
-	    "price" => 25,
-	    "paypal" => "JMFK7P7VEHS44",
-			"sizes" => array("Large", "X-large"),
-			"style" => array("Short Sleeve", "Long Sleeve", "Thermal", "Hooded")
-	);
-	
-	    $products[109] = array(
-            "name" => "Get Coding Shirt, Gray",
-            "img" => "img/shirts/shirt-109.jpg",    
-            "price" => 20,
-            "paypal" => "B5DAJHWHDA4RC",
-            "sizes" => array("Small","Medium","Large","X-Large")
-    );
-    $products[110] = array(
-            "name" => "HTML5 Shirt, Orange",
-            "img" => "img/shirts/shirt-110.jpg",    
-            "price" => 22,
-            "paypal" => "6T2LVA8EDZR8L",
-            "sizes" => array("Small","Medium","Large","X-Large")
-    );
-    $products[111] = array(
-            "name" => "CSS3 Shirt, Gray",
-            "img" => "img/shirts/shirt-111.jpg",    
-            "price" => 22,
-            "paypal" => "MA2WQGE2KCWDS",
-            "sizes" => array("Small","Medium","Large","X-Large")
-    );
-    $products[112] = array(
-            "name" => "HTML5 Shirt, Blue",
-            "img" => "img/shirts/shirt-112.jpg",    
-            "price" => 22,
-            "paypal" => "FWR955VF5PALA",
-            "sizes" => array("Small","Medium","Large","X-Large")
-    );
-    $products[113] = array(
-            "name" => "CSS3 Shirt, Black",
-            "img" => "img/shirts/shirt-113.jpg",    
-            "price" => 22,
-            "paypal" => "4ELH2M2FW7272",
-            "sizes" => array("Small","Medium","Large","X-Large")
-    );
-    $products[114] = array(
-            "name" => "PHP Shirt, Yellow",
-            "img" => "img/shirts/shirt-114.jpg",    
-            "price" => 24,
-            "paypal" => "AT3XQ3ZVP2DZG",
-            "sizes" => array("Small","Medium","Large","X-Large")
-    );
-    $products[115] = array(
-            "name" => "PHP Shirt, Purple",
-            "img" => "img/shirts/shirt-115.jpg",    
-            "price" => 24,
-            "paypal" => "LYESEKV9JWE3A",
-            "sizes" => array("Small","Medium","Large","X-Large")
-    );
-    $products[116] = array(
-            "name" => "PHP Shirt, Green",
-            "img" => "img/shirts/shirt-116.jpg",    
-            "price" => 24,
-            "paypal" => "KT7MRRJUXZR34",
-            "sizes" => array("Small","Medium","Large","X-Large")
-    );
-    $products[117] = array(
-            "name" => "Get Coding Shirt, Red",
-            "img" => "img/shirts/shirt-117.jpg",    
-            "price" => 20,
-            "paypal" => "5UXJG8PXRXFKE",
-            "sizes" => array("Small","Medium","Large","X-Large")
-    );
-    $products[118] = array(
-            "name" => "Mike the Frog Shirt, Purple",
-            "img" => "img/shirts/shirt-118.jpg",    
-            "price" => 25,
-            "paypal" => "KHP8PYPDZZFTA",
-            "sizes" => array("Small","Medium","Large","X-Large")
-    );
-    $products[119] = array(
-            "name" => "CSS3 Shirt, Purple",
-            "img" => "img/shirts/shirt-119.jpg",    
-            "price" => 22,
-            "paypal" => "BFJRFE24L93NW",
-            "sizes" => array("Small","Medium","Large","X-Large")
-    );
-    $products[120] = array(
-            "name" => "HTML5 Shirt, Red",
-            "img" => "img/shirts/shirt-120.jpg",    
-            "price" => 22,
-            "paypal" => "RUVJSBR9FXXWQ",
-            "sizes" => array("Small","Medium","Large","X-Large")
-    );
-    $products[121] = array(
-            "name" => "Get Coding Shirt, Blue",
-            "img" => "img/shirts/shirt-121.jpg",    
-            "price" => 20,
-            "paypal" => "PGN6ULGFZTXL4",
-            "sizes" => array("Small","Medium","Large","X-Large")
-    );
-    $products[122] = array(
-            "name" => "PHP Shirt, Gray",
-            "img" => "img/shirts/shirt-122.jpg",    
-            "price" => 24,
-            "paypal" => "PYR4QH97W2TSJ",
-            "sizes" => array("Small","Medium","Large","X-Large")
-    );
-    $products[123] = array(
-            "name" => "Mike the Frog Shirt, Green",
-            "img" => "img/shirts/shirt-123.jpg",    
-            "price" => 25,
-            "paypal" => "STDAUJJTSPT54",
-            "sizes" => array("Small","Medium","Large","X-Large")
-    );
-    $products[124] = array(
-            "name" => "Logo Shirt, Yellow",
-            "img" => "img/shirts/shirt-124.jpg",    
-            "price" => 20,
-            "paypal" => "2R2U74KWU5RXG",
-            "sizes" => array("Small","Medium","Large","X-Large")
-    );
-    $products[125] = array(
-            "name" => "CSS3 Shirt, Blue",
-            "img" => "img/shirts/shirt-125.jpg",    
-            "price" => 22,
-            "paypal" => "GJG7F8EW3XFAS",
-            "sizes" => array("Small","Medium","Large","X-Large")
-    );
-    $products[126] = array(
-            "name" => "Doctype Shirt, Green",
-            "img" => "img/shirts/shirt-126.jpg",    
-            "price" => 25,
-            "paypal" => "QW2LFRYGU7L4Q",
-            "sizes" => array("Small","Medium","Large","X-Large")
-    );
-    $products[127] = array(
-            "name" => "Logo Shirt, Purple",
-            "img" => "img/shirts/shirt-127.jpg",    
-            "price" => 20,
-            "paypal" => "GFV6QVRMJU7F8",
-            "sizes" => array("Small","Medium","Large","X-Large")
-    );
-    $products[128] = array(
-            "name" => "Doctype Shirt, Purple",
-            "img" => "img/shirts/shirt-128.jpg",    
-            "price" => 25,
-            "paypal" => "BARQMHMB565PN",
-            "sizes" => array("Small","Medium","Large","X-Large")
-    );
-    $products[129] = array(
-            "name" => "Get Coding Shirt, Green",
-            "img" => "img/shirts/shirt-129.jpg",    
-            "price" => 20,
-            "paypal" => "DH9GXABU3P8GS",
-            "sizes" => array("Small","Medium","Large","X-Large")
-    );
-    $products[130] = array(
-            "name" => "HTML5 Shirt, Teal",
-            "img" => "img/shirts/shirt-130.jpg",    
-            "price" => 22,
-            "paypal" => "4LZ3EUVCBENE4",
-            "sizes" => array("Small","Medium","Large","X-Large")
-    );
-    $products[131] = array(
-            "name" => "Logo Shirt, Orange",
-            "img" => "img/shirts/shirt-131.jpg",    
-            "price" => 20,
-            "paypal" => "7BNDYJBKWD364",
-            "sizes" => array("Small","Medium","Large","X-Large")
-    );
-    $products[132] = array(
-            "name" => "Mike the Frog Shirt, Red",
-            "img" => "img/shirts/shirt-132.jpg",    
-            "price" => 25,
-            "paypal" => "Y6EQRE445MYYW",
-            "sizes" => array("Small","Medium","Large","X-Large")
-    );
-    
-	foreach ($products as $product_id => $product){
-		$products[$product_id]["sku"] = $product_id;
-    }*/
-
-    
+      
    require('db.php');
 
     try{
