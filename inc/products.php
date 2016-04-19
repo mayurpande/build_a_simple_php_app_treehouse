@@ -1,17 +1,5 @@
 <?php
 
-function get_product($id){
-	$products = get_products_all();
-	if(isset($id)){
-		if(isset($products[$id])){
-			return $product = $products[$id];
-		}else{
-			return array();
-		}
-	}	
-	
-}
-
 //function will return an array of recent products
 //it will not return any html or instructions about displaying the page
 function get_products_recent(){
@@ -354,7 +342,61 @@ function get_product_single($sku){
     //product that matches the sku and loads it into the product variable so it can be returned back
     //to the controller
     $product = $results->fetch(PDO::FETCH_ASSOC);
-  
+    
+    if($product == false) {
+        return $product;
+    }
+
+    $product["sizes"] = array();
+
+    try{
+        $results = $db->prepare("
+            SELECT size
+            FROM products_sizes
+            INNER JOIN sizes
+            ON products_sizes.size_id = sizes.id
+            WHERE product_sku = ?
+            ORDER BY `order`");
+        $results->bindParam(1,$sku);
+        $results->execute();
+
+    }catch(Exception $e){
+        echo 'Data could not be retrieved from the database';
+        exit;
+    }
+    //this while loop actually executes a command
+    //it calls the fetch method and loads the return value of the fetch value into a
+    //a variable named row. This variable will contain the first size as long as the row
+    //variable is not false then the condition will be considered true and the code inside
+    //the curly brackets will be executed, when the end of the while loop is reached, the flow
+    //loops back to the top. It again calls the fetch method which this time loads the second 
+    //size into the row variable, because the row variable is still not false, it runs the code
+    //inside the loop again, at the end it loops back and calls the fetch method again loading
+    //the third size into the variable and executing the code inside the while loop. If the 
+    //current item only had 3 sizes after executing the code three times it would loop back up
+    //to the top of the condition again it would call the fetch method again which this time 
+    //would return false and store it in the row variable because there are no more sizes to fetch
+    //it already fetched all three of them. In this case the row variable gets assinged a value of
+    //boolean false, the while loop sees that row is false and it now ends the while loop and skips
+    //down to the final closing curly brackets 
+    while($row = $results->fetch(PDO::FETCH_ASSOC)){
+        //we want to add a new size to the product variable 
+        //remember that each detail about the shirt including the available sizes is represented
+        //by an element inside this array, 
+        //the sizes element is different than the other elements because it is also an array.
+        //it is an array nested inside of an array
+        //to add a new element to an exiting array, we use a opening and closing square bracket
+        //this will add a new element to the second dimension of our product variable using
+        //whatever key is available next
+        //
+        //inside our while loop the row variable contains the record from the results object that
+        //we retrieved using the fetch method, which inludes the name of the size from the db
+        //the row variable is an array which will have one element inside of it for each column in
+        //the query. In this case the row array will have one element size because we only have one
+        //column specified in our select statement, we want to take the size from the row array
+        //and load it into the sizes available in our product variable,  
+        $product["sizes"][] = $row["size"];
+    }
     return $product;
 }
 
