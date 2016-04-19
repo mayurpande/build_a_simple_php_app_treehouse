@@ -3,22 +3,24 @@
 //function will return an array of recent products
 //it will not return any html or instructions about displaying the page
 function get_products_recent(){
-	$recent = array();
-	//stores $products array into $all variable
-	$all = get_products_all();
-	$total_products = count($all);
-	$position = 0;
+    require('db.php');
+    try{
+        //no need for prepare method as there is no user input
+        $results = $db->query("
+            SELECT name,price,img,sku,paypal
+            FROM products
+            ORDER BY sku DESC
+            LIMIT 4
+            ");
+    }catch(Exception $e){
+        echo "Data could not be retrieved from the db";
+        exit;
+    }  
 
-	//loop through all the shirts one by one to determine if any of them is one of the last four shirts
-	foreach($all as $product){
-	//when we find one of the shirts that is one of the last four shirts we will add it to the recent array
-		//if $product is one of the 
-		//last four  shirts {
-		$position = $position + 1;
-		if($total_products - $position < 4){
-			$recent[] = $product;
-		}
-	}
+    //we called the query method above, so we should have all four shirts in the results object
+    //we can extract them into an array with the fetch all method
+    $recent = $results->fetchAll(PDO::FETCH_ASSOC);
+    $recent = array_reverse($recent);
 	return $recent;
 }
 
@@ -38,30 +40,46 @@ function get_products_search($s){
 
 //function to obtain shirts for selected pages
 function get_products_subset($positionStart, $positionEnd){
-    $subset = array();
-    $all = get_products_all();
-    
-    $position = 0;
+    //calculate offset and row position to use in query
+    $offset = $positionStart + 1;
+    $rows = $positionEnd - $positionStart + 1;
 
-    //foreach loop to go through all products one after the other
-    foreach($all as $product){
-        //this will increase the shirt number by one each time the loop is run
-        $position += 1;
-        //we need a conditional that checks if the shirt is one of the ones
-        //in the subset of shirts we are looking for
-        //we check if the current position is greater than or equal to the starting position
-        //it must also pass other condition is must be less than or equal to the ending position
-        if($position >= $positionStart && $position <= $positionEnd){
-            //if the shirt is one of the ones we want to include, we will include it in the subset array
-            $subset[] = $product;
-        }
-    }   
+    
+    require('db.php');
+    try{
+        $results = $db->prepare("
+            SELECT * 
+            FROM products
+            ORDER BY sku ASC
+            LIMIT ?,? 
+            ");
+        //bind limit parameters, as this will be a string update, use pdo method to convert to int
+        $results->bindParam(1,$offset,PDO::PARAM_INT);
+        $results->bindParam(2,$rows,PDO::PARAM_INT);
+        $results->execute();
+    }catch(Exception $e){
+        echo 'Data could not be found';
+    }
+
+    $subset = $results->fetchAll(PDO::FETCH_ASSOC);
+
     return $subset;
 }
 
 //function to calculate total number of products
 function get_products_count(){
-    return $count = count(get_products_all());
+    require('db.php');
+
+    try{
+        $results = $db->query("
+            SELECT COUNT(sku)
+            FROM products");
+    }catch(Exception $e){
+        echo 'Data could not be retrieved from the db';
+        exit;
+    }
+
+    return(intval($results->fetchColumn(0)));
 }
 //function to return full list of all products
 function get_products_all(){
