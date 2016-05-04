@@ -1,7 +1,9 @@
 <?php 
 $pageTitle = "Unique T-shirts desgines by a frog";
 $section ="";
-include('inc/header.php'); ?>
+include('inc/header.php'); 
+
+?>
 
 		<div class="section banner">
 
